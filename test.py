@@ -80,7 +80,7 @@ def add_ui_panel(frame, face_count, detected_people):
     cv2.addWeighted(overlay, 0.7, frame, 0.3, 0, frame)
     
     # Title
-    cv2.putText(frame, "Face Recognition System", (20, 35), FONT, 1.5, TEXT_COLOR, 2)
+    cv2.putText(frame, "Facial Recognition", (20, 35), FONT, 1.5, TEXT_COLOR, 2)
     
     # Stats
     stats_text = f"Faces Detected: {face_count} | Press Q to Exit"
@@ -180,15 +180,14 @@ while True:
                    FONT, 1.2, WARNING_COLOR, 2)
 
     if not window_initialized:
-        cv2.namedWindow('Emotion Detector', cv2.WINDOW_NORMAL)
-        win_w, win_h = frame.shape[1], frame.shape[0]
-        cv2.resizeWindow('Emotion Detector', 1280, 720)
-        cv2.moveWindow('Emotion Detector', max(0, (screen_w - 1280)//2), max(0, (screen_h - 720)//2))
+        cv2.namedWindow('Prototype', cv2.WINDOW_NORMAL)
+        cv2.resizeWindow('Prototype', 1280, 720)
+        cv2.moveWindow('Prototype', max(0, (screen_w - 1280)//2), max(0, (screen_h - 720)//2))
         window_initialized = True
 
-    cv2.imshow('Emotion Detector',frame)
+    cv2.imshow('Prototype',frame)
     if cv2.waitKey(1) & 0xFF == ord('q'):
-        print("\n✓ Program closed. Goodbye!")
+        print("\n✓ Program closed.")
         break
 
 cap.release()
