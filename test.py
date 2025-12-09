@@ -9,6 +9,7 @@ import cv2
 import numpy as np
 import os
 import pickle
+import ctypes
 
 face_classifier = cv2.CascadeClassifier('./haarcascade_frontalface_default.xml')
 
@@ -43,6 +44,11 @@ if not cap.isOpened():
     print("Error: Could not access the camera. Ensure it is free and retry.")
     exit()
 
+# Prepare window centering helper
+user32 = ctypes.windll.user32
+screen_w = user32.GetSystemMetrics(0)
+screen_h = user32.GetSystemMetrics(1)
+window_initialized = False
 
 
 while True:
@@ -77,6 +83,14 @@ while True:
         else:
             cv2.putText(frame,'No Face Found',(20,60),cv2.FONT_HERSHEY_SIMPLEX,2,(0,255,0),3)
         print("\n")
+
+    if not window_initialized:
+        cv2.namedWindow('Emotion Detector', cv2.WINDOW_NORMAL)
+        win_w, win_h = frame.shape[1], frame.shape[0]
+        cv2.resizeWindow('Emotion Detector', win_w, win_h)
+        cv2.moveWindow('Emotion Detector', max(0, (screen_w - win_w)//2), max(0, (screen_h - win_h)//2))
+        window_initialized = True
+
     cv2.imshow('Emotion Detector',frame)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
